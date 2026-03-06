@@ -438,12 +438,24 @@
   }
 
   /* ====================================================
+     HTML ESCAPING (for text-only fields rendered into HTML)
+  ==================================================== */
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  /* ====================================================
      DATE FORMATTING
   ==================================================== */
   function formatDate(dateStr, lang) {
-    var d = new Date(dateStr + 'T12:00:00');
+    var d = new Date(dateStr + 'T00:00:00Z');
     var locale = lang === 'de' ? 'de-DE' : 'en-GB';
-    return d.toLocaleDateString(locale, { year: 'numeric', month: 'short' });
+    return d.toLocaleDateString(locale, { year: 'numeric', month: 'short', timeZone: 'UTC' });
   }
 
   /* ====================================================
@@ -470,19 +482,19 @@
         '<div class="project-meta">' +
           '<div class="project-domain-row">' +
             '<span class="project-icon-sm" aria-hidden="true">' + icon + '</span>' +
-            '<span class="project-domain-label">' + p.customerDomain + '</span>' +
+            '<span class="project-domain-label">' + escapeHtml(p.customerDomain) + '</span>' +
           '</div>' +
-          '<span class="project-period">' + start + ' – ' + end + '</span>' +
+          '<span class="project-period">' + escapeHtml(start) + ' – ' + escapeHtml(end) + '</span>' +
         '</div>' +
-        '<h2 class="project-title">' + p.title + '</h2>' +
-        '<p class="project-section-label">' + t['projects.desc.label'] + '</p>' +
+        '<h2 class="project-title">' + escapeHtml(p.title) + '</h2>' +
+        '<p class="project-section-label">' + escapeHtml(t['projects.desc.label']) + '</p>' +
         '<div class="project-desc">' + p.description + '</div>' +
-        '<p class="project-section-label">' + t['projects.role.label'] + '</p>' +
+        '<p class="project-section-label">' + escapeHtml(t['projects.role.label']) + '</p>' +
         '<div class="project-role">' + p.role + '</div>' +
-        '<p class="project-section-label">' + t['projects.tech.label'] + '</p>' +
+        '<p class="project-section-label">' + escapeHtml(t['projects.tech.label']) + '</p>' +
         '<div class="project-tags">' +
           p.technologies.map(function (tech) {
-            return '<span class="tag">' + tech + '</span>';
+            return '<span class="tag">' + escapeHtml(tech) + '</span>';
           }).join('') +
         '</div>' +
       '</article>';
@@ -497,17 +509,17 @@
 
     document.querySelectorAll('[data-i18n]').forEach(function (el) {
       var key = el.getAttribute('data-i18n');
-      if (t[key] !== undefined) el.textContent = t[key];
+      if (key in t) el.textContent = t[key];
     });
 
     document.querySelectorAll('[data-i18n-html]').forEach(function (el) {
       var key = el.getAttribute('data-i18n-html');
-      if (t[key] !== undefined) el.innerHTML = t[key];
+      if (key in t) el.innerHTML = t[key];
     });
 
     document.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
       var key = el.getAttribute('data-i18n-placeholder');
-      if (t[key] !== undefined) el.placeholder = t[key];
+      if (key in t) el.placeholder = t[key];
     });
 
     document.querySelectorAll('.lang-btn').forEach(function (btn) {

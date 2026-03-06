@@ -521,7 +521,12 @@ img {
   margin-bottom: 0.5rem;
 }
 
-.project-desc {
+.project-desc,
+.project-desc p,
+.project-desc li,
+.project-role,
+.project-role p,
+.project-role li {
   font-size: 0.88rem;
   color: var(--text-muted);
   line-height: 1.7;
@@ -529,9 +534,6 @@ img {
 
 .project-desc p,
 .project-role p {
-  color: var(--text-muted);
-  font-size: 0.88rem;
-  line-height: 1.7;
   margin-bottom: 0.4rem;
 }
 
@@ -543,16 +545,8 @@ img {
 
 .project-desc li,
 .project-role li {
-  color: var(--text-muted);
-  font-size: 0.88rem;
   line-height: 1.65;
   margin-bottom: 0.25rem;
-}
-
-.project-role {
-  font-size: 0.88rem;
-  color: var(--text-muted);
-  line-height: 1.7;
 }
 
 .project-meta {
