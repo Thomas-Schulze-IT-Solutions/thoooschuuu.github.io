@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,11 +13,16 @@
   <nav class="navbar">
     <a href="index.html" class="navbar-brand">Thomas<span>.</span>dev</a>
     <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="projects.html">Projects</a></li>
-      <li><a href="contact.html">Contact</a></li>
+      <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+      <li><a href="about.html" data-i18n="nav.about">About</a></li>
+      <li><a href="projects.html" data-i18n="nav.projects">Projects</a></li>
+      <li><a href="contact.html" data-i18n="nav.contact">Contact</a></li>
     </ul>
+    <div class="lang-toggle" aria-label="Language switcher">
+      <button class="lang-btn" data-lang="de">DE</button>
+      <span class="lang-toggle-sep">|</span>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
     <button class="hamburger" aria-label="Toggle navigation">
       <span></span>
       <span></span>
@@ -28,9 +33,9 @@
   <main class="page">
     <div class="section">
       <div class="section-header">
-        <span class="section-label">Let's Talk</span>
-        <h1 class="section-title">Get in Touch</h1>
-        <p class="section-desc">
+        <span class="section-label" data-i18n="contact.label">Let's Talk</span>
+        <h1 class="section-title" data-i18n="contact.title">Get in Touch</h1>
+        <p class="section-desc" data-i18n="contact.desc">
           Have a project in mind or want to explore a collaboration? I'd love to hear from you.
           I typically respond within one business day.
         </p>
@@ -39,8 +44,8 @@
       <div class="contact-grid">
         <!-- Contact Info -->
         <div class="contact-info">
-          <h2>Contact Details</h2>
-          <p>
+          <h2 data-i18n="contact.details.title">Contact Details</h2>
+          <p data-i18n="contact.details.desc">
             Feel free to reach out via email or connect with me on LinkedIn.
             I'm open to freelance engagements, consulting, and contract work.
           </p>
@@ -49,7 +54,7 @@
             <div class="contact-item">
               <div class="contact-item-icon">&#x2709;&#xFE0F;</div>
               <div class="contact-item-text">
-                <strong>Email</strong>
+                <strong data-i18n="contact.email.label">Email</strong>
                 <a href="mailto:info@thomas-schulze-it-solutions.de">info@thomas-schulze-it-solutions.de</a>
               </div>
             </div>
@@ -57,8 +62,8 @@
             <div class="contact-item">
               <div class="contact-item-icon">&#x1F4CD;</div>
               <div class="contact-item-text">
-                <strong>Location</strong>
-                <span>Germany (Remote &amp; On-Site)</span>
+                <strong data-i18n="contact.location.label">Location</strong>
+                <span data-i18n="contact.location.value">Germany (Remote &amp; On-Site)</span>
               </div>
             </div>
 
@@ -74,18 +79,6 @@
               </div>
             </a>
 
-            <a href="https://github.com/thoooschuuu" class="contact-item" target="_blank" rel="noopener" style="text-decoration:none;">
-              <div class="contact-item-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.891 1.528 2.341 1.087 2.91.831.091-.645.349-1.087.635-1.337-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
-                </svg>
-              </div>
-              <div class="contact-item-text">
-                <strong>GitHub</strong>
-                <span>thoooschuuu</span>
-              </div>
-            </a>
-
             <a href="https://thomas-schulze-it-solutions.de" class="contact-item" target="_blank" rel="noopener" style="text-decoration:none;">
               <div class="contact-item-icon">&#x1F310;</div>
               <div class="contact-item-text">
@@ -96,56 +89,62 @@
           </div>
 
           <div style="margin-top: 2rem; padding: 1.25rem; background: rgba(0,212,255,0.06); border: 1px solid rgba(0,212,255,0.2); border-radius: var(--radius);">
-            <strong style="color: var(--accent); font-size: 0.85rem; display: block; margin-bottom: 0.4rem;">&#x2705; Currently Available</strong>
-            <span style="color: var(--text-muted); font-size: 0.9rem;">I'm open to new freelance engagements. Let's talk about your project!</span>
+            <strong style="color: var(--accent); font-size: 0.85rem; display: block; margin-bottom: 0.4rem;" data-i18n="contact.available">&#x2705; Currently Available</strong>
+            <span style="color: var(--text-muted); font-size: 0.9rem;" data-i18n="contact.available.text">I'm open to new freelance engagements. Let's talk about your project!</span>
           </div>
         </div>
 
         <!-- Contact Form -->
         <div class="contact-form">
-          <h3>Send a Message</h3>
+          <h3 data-i18n="contact.form.title">Send a Message</h3>
 
           <form id="contactForm" action="https://formspree.io/f/xpwzqgpn" method="POST" novalidate>
             <div class="form-row">
               <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" id="name" name="name" placeholder="Your name" required />
+                <label for="name" data-i18n="contact.form.name.label">Name</label>
+                <input type="text" id="name" name="name" required
+                  data-i18n-placeholder="contact.form.name.placeholder"
+                  placeholder="Your name" />
               </div>
               <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="_replyto" placeholder="your@email.com" required />
+                <label for="email" data-i18n="contact.form.email.label">Email</label>
+                <input type="email" id="email" name="_replyto" required
+                  data-i18n-placeholder="contact.form.email.placeholder"
+                  placeholder="your@email.com" />
               </div>
             </div>
 
             <div class="form-group">
-              <label for="subject">Subject</label>
+              <label for="subject" data-i18n="contact.form.subject.label">Subject</label>
               <select id="subject" name="subject">
-                <option value="">Select a topic…</option>
-                <option value="Project Inquiry">Project Inquiry</option>
-                <option value="Consulting">Consulting</option>
-                <option value="Team Augmentation">Team Augmentation</option>
-                <option value="Code Review">Code Review</option>
-                <option value="Other">Other</option>
+                <option value="" data-i18n="contact.form.subject.default">Select a topic…</option>
+                <option value="Project Inquiry" data-i18n="contact.form.subject.project">Project Inquiry</option>
+                <option value="Consulting" data-i18n="contact.form.subject.consult">Consulting</option>
+                <option value="Team Augmentation" data-i18n="contact.form.subject.augment">Team Augmentation</option>
+                <option value="Code Review" data-i18n="contact.form.subject.review">Code Review</option>
+                <option value="Other" data-i18n="contact.form.subject.other">Other</option>
               </select>
             </div>
 
             <div class="form-group">
-              <label for="message">Message</label>
-              <textarea id="message" name="message" placeholder="Tell me about your project or question…" required></textarea>
+              <label for="message" data-i18n="contact.form.message.label">Message</label>
+              <textarea id="message" name="message" required
+                data-i18n-placeholder="contact.form.message.placeholder"
+                placeholder="Tell me about your project or question…"></textarea>
             </div>
 
             <!-- Honeypot field to prevent spam -->
             <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
 
-            <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">
+            <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;" data-i18n="contact.form.submit">
               Send Message &#x2192;
             </button>
           </form>
 
           <div id="formSuccess" class="form-success">
             <div class="success-icon">&#x2705;</div>
-            <h4>Message sent!</h4>
-            <p>Thank you for reaching out. I'll get back to you within one business day.</p>
+            <h4 data-i18n="contact.form.success.title">Message sent!</h4>
+            <p data-i18n="contact.form.success.text">Thank you for reaching out. I'll get back to you within one business day.</p>
           </div>
         </div>
       </div>
@@ -153,9 +152,10 @@
   </main>
 
   <footer>
-    <p>&copy; 2024 Thomas Schulze IT Solutions &middot; <a href="contact.html">Contact</a></p>
+    <p>&copy; 2024 Thomas Schulze IT Solutions &middot; <a href="contact.html" data-i18n="footer.contact">Contact</a></p>
   </footer>
 
+  <script src="js/i18n.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

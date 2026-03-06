@@ -61,10 +61,12 @@ if (contactForm) {
           formSuccess.style.display = 'block';
         }
       } else {
-        contactForm.querySelector('[type="submit"]').textContent = 'Failed – please try again';
+        contactForm.querySelector('[type="submit"]').textContent =
+          (window.i18n && window.i18n.t('contact.form.error')) || 'Failed – please try again';
       }
     }).catch(function () {
-      contactForm.querySelector('[type="submit"]').textContent = 'Failed – please try again';
+      contactForm.querySelector('[type="submit"]').textContent =
+        (window.i18n && window.i18n.t('contact.form.error')) || 'Failed – please try again';
     });
   });
 }
