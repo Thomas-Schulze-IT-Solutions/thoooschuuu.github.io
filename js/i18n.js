@@ -95,7 +95,8 @@
       'contact.form.error':              'Failed – please try again',
 
       /* --- Footer --- */
-      'footer.contact': 'Contact',
+      'footer.contact':   'Contact',
+      'footer.impressum': 'Impressum',
     },
 
     de: {
@@ -181,7 +182,8 @@
       'contact.form.error':              'Fehlgeschlagen – bitte erneut versuchen',
 
       /* --- Footer --- */
-      'footer.contact': 'Kontakt',
+      'footer.contact':   'Kontakt',
+      'footer.impressum': 'Impressum',
     }
   };
 
