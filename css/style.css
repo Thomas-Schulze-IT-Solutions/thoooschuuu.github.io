@@ -1016,6 +1016,14 @@ html[data-theme="light"] {
   --outline-border: rgba(30, 27, 16, 0.25);
   --outline-border-hover: rgba(30, 27, 16, 0.45);
   --outline-bg-hover: rgba(0, 0, 0, 0.05);
+  /* Dark amber overrides – the bright golden (#ffc250) is unreadable on light
+     backgrounds (~1.5:1). These values achieve 5.2:1 on the page bg and
+     5.8:1 on card bg, meeting WCAG AA (≥ 4.5:1) for normal text. */
+  --accent: #8a5c00;
+  --accent-light: #a06a00;
+  --primary: #8a5c00;
+  --primary-dark: #6b4600;
+  --primary-darker: #503400;
 }
 
 /* btn-primary needs explicit dark text in light mode (--darker becomes light cream) */
