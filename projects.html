@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects – Thomas Schulze IT Solutions</title>
+  <meta name="description" content="A selection of projects worked on by Thomas Schulze – freelance software engineer specialising in .NET, C#, Angular, React, and cloud solutions." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <a href="index.html" class="navbar-brand">Thomas<span>.</span>dev</a>
+    <ul class="nav-links">
+      <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+      <li><a href="about.html" data-i18n="nav.about">About</a></li>
+      <li><a href="projects.html" data-i18n="nav.projects">Projects</a></li>
+      <li><a href="contact.html" data-i18n="nav.contact">Contact</a></li>
+    </ul>
+    <div class="lang-toggle" aria-label="Language switcher">
+      <button class="lang-btn" data-lang="de">DE</button>
+      <span class="lang-toggle-sep">|</span>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+    <button class="hamburger" aria-label="Toggle navigation">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <main class="page">
+    <div class="section">
+      <div class="section-header">
+        <span class="section-label" data-i18n="projects.label">Portfolio</span>
+        <h1 class="section-title" data-i18n="projects.title">My Projects</h1>
+        <p class="section-desc" data-i18n="projects.desc">
+          A selection of projects I've worked on as a freelance software engineer.
+        </p>
+      </div>
+
+      <!-- Project cards are rendered dynamically by js/i18n.js -->
+      <div class="projects-grid" id="projectsGrid"></div>
+
+      <!-- CTA -->
+      <div style="text-align: center; margin-top: 3.5rem;">
+        <p style="color: var(--text-muted); margin-bottom: 1.25rem;" data-i18n="projects.cta.text">
+          Have a project in mind? Let's build something great together.
+        </p>
+        <a href="contact.html" class="btn btn-primary" data-i18n="projects.cta.btn">Get in Touch →</a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 Thomas Schulze IT Solutions &middot; <a href="contact.html" data-i18n="footer.contact">Contact</a> &middot; <a href="impressum.html" data-i18n="footer.impressum">Impressum</a></p>
+  </footer>
+
+  <script src="js/i18n.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
