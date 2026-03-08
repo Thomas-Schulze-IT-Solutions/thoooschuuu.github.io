@@ -76,7 +76,7 @@ Every file is served directly by GitHub Pages.
 | AD-5 | Flash-free theme via inline `<head>` script | One inline snippet per page, never move it |
 | AD-6 | i18n in JS, German default | All strings need `data-i18n` + both `en`/`de` translations |
 | AD-7 | Projects rendered from JS data | Edit `projectsData.en` and `projectsData.de` in `js/i18n.js` only |
-| AD-8 | mailto: contact form (no backend) | Change delivery email in `js/main.js` (`mailtoUrl`); keep `e.preventDefault()` |
+| AD-8 | mailto: contact form (no backend) | Change delivery email in `js/main.js` (`mailtoUrl`) and in `contact.html` (form `action` + visible mail link); keep `e.preventDefault()` |
 | AD-9 | WCAG AA contrast in light mode | Verify contrast with WebAIM checker before changing accent/primary tokens |
 | AD-10 | Inline SVG icons | Use `stroke="currentColor"` / `fill="currentColor"`; no icon fonts |
 
