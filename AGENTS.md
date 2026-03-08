@@ -121,7 +121,7 @@ Each decision below carries agent-actionable rules. Before making changes, ident
 **Rationale:** Zero dependencies, no API keys, no monthly cost, GDPR-friendly — the message goes directly from the user's own email client to the inbox.  
 **Agent rules:**
 - ❌ Never remove `e.preventDefault()` from the form submit handler in `main.js` — it is still required to prevent the browser's native form navigation before the mailto URL is built.
-- ✅ To change the delivery email address, update the `mailto:` address in the `mailtoUrl` string inside the submit handler in `js/main.js`.
+- ✅ To change the delivery email address, update the `mailto:` address in the `mailtoUrl` string inside the submit handler in `js/main.js`, and update the matching `mailto:` addresses in `contact.html` (the form `action="mailto:…"` and the contact mail link) so the fallback path stays consistent.
 - ✅ To replace the mailto: approach with a backend endpoint (e.g. Azure Logic App, AWS API Gateway + SES, or a PHP script), replace the `window.location.href = mailtoUrl` block with a `fetch()` call and restore `formSuccess` / error handling accordingly. Update the `action` attribute on `<form>` in `contact.html` as well.
 
 ### AD-9: WCAG AA colour contrast enforced in light mode
