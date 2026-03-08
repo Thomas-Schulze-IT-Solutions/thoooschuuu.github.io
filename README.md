@@ -157,7 +157,7 @@ No transpiler or bundler is used – the scripts are loaded directly via `<scrip
 
 The form in `contact.html` uses a **client-side mailto: approach** — no backend or external service required. When the user submits the form, `js/main.js` collects the field values, builds a pre-filled `mailto:` URL, and navigates to it so the system email client opens with the message ready to send.
 
-- To change the delivery email address: update the `mailto:` address in the `mailtoUrl` string inside the submit handler in `js/main.js`.
+- To change the delivery email address: update the `mailto:` address in all of the following places so they stay in sync: the `mailtoUrl` string inside the submit handler in `js/main.js`, the `action="mailto:..."` attribute on the `<form>` in `contact.html` (for the non-JS fallback), and the visible contact email link in `contact.html`.
 - To switch to a backend service (Azure Logic App, AWS API Gateway + SES, a PHP endpoint, etc.), replace the `window.location.href = mailtoUrl` block in `js/main.js` with a `fetch()` call to that endpoint, update the `action` attribute on `<form>` in `contact.html`, and restore the `formSuccess` / error-button pattern.
 
 ---
