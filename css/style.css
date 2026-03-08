@@ -644,6 +644,11 @@ img {
   transition: max-height 0.4s ease;
 }
 
+/* After transitionend the inline max-height is removed; this prevents re-collapse on resize */
+.project-card.is-open .project-card-body {
+  max-height: none;
+}
+
 .project-icon {
   width: 48px;
   height: 48px;

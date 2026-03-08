@@ -531,8 +531,30 @@
         if (!body) return;
         var open = card.classList.toggle('is-open');
         header.setAttribute('aria-expanded', open ? 'true' : 'false');
-        body.style.maxHeight = open ? body.scrollHeight + 'px' : '0';
+        if (open) {
+          body.style.maxHeight = body.scrollHeight + 'px';
+        } else {
+          // Re-pin current height before collapsing; the inline style may have been
+          // cleared by transitionend, leaving body unrestricted (max-height: none from CSS).
+          body.style.maxHeight = body.scrollHeight + 'px';
+          // Force a synchronous reflow so the browser sees the start value for the transition.
+          // eslint-disable-next-line no-unused-expressions
+          body.offsetHeight;
+          body.style.maxHeight = '0';
+        }
       }
+
+      // Remove the inline max-height constraint once fully open so the body reflows
+      // naturally on viewport resize (text reflow won't cause content clipping).
+      grid.addEventListener('transitionend', function (e) {
+        if (e.propertyName !== 'max-height') return;
+        var body = e.target;
+        if (!body.classList.contains('project-card-body')) return;
+        var card = body.closest('.project-card');
+        if (card && card.classList.contains('is-open')) {
+          body.style.maxHeight = ''; // CSS .is-open rule (max-height: none) takes over
+        }
+      });
 
       grid.addEventListener('click', function (e) {
         var header = e.target.closest('.project-card-header');
