@@ -21,7 +21,7 @@ Every file is served directly by GitHub Pages.
 ├── index.html        # Landing / hero page
 ├── about.html        # About me (bio, skills, stats, services)
 ├── projects.html     # Project portfolio cards (rendered from JS data)
-├── contact.html      # Contact details + Formspree form
+├── contact.html      # Contact details + mailto: form
 ├── impressum.html    # Legal notice (Impressum)
 ├── css/style.css     # One shared stylesheet – dark/light theme, CSS variables, responsive
 ├── fonts/            # Self-hosted Arimo font files (.woff2)
@@ -47,7 +47,7 @@ Every file is served directly by GitHub Pages.
 - Add `<article class="project-card">` directly in `projects.html`.
 - Hard-code English-only text in HTML — every visible string needs `data-i18n` and translations in both `en` and `de`.
 - Introduce an icon font (Font Awesome, Material Icons, etc.).
-- Remove `e.preventDefault()` from the contact form submit handler in `main.js`.
+- Remove `e.preventDefault()` from the contact form submit handler in `main.js` — it is still required to prevent native form submission before the mailto URL is built.
 - Change `--accent`/`--primary` colour tokens without verifying WCAG AA contrast (≥4.5:1 for text).
 
 ### ✅ Always do these
@@ -61,6 +61,7 @@ Every file is served directly by GitHub Pages.
 - Add `rel="noopener"` to every `target="_blank"` link.
 - Add `aria-hidden="true"` to purely decorative SVGs; add `aria-label` to interactive ones.
 - When adding/editing a project: update **both** `projectsData.en` and `projectsData.de` in `js/i18n.js` with matching UUID v4 `id` values.
+- **After every code change, check whether `AGENTS.md`, `README.md`, and `.github/copilot-instructions.md` need updating** to reflect the change. Update any out-of-date content in the same commit.
 
 ---
 
@@ -75,7 +76,7 @@ Every file is served directly by GitHub Pages.
 | AD-5 | Flash-free theme via inline `<head>` script | One inline snippet per page, never move it |
 | AD-6 | i18n in JS, German default | All strings need `data-i18n` + both `en`/`de` translations |
 | AD-7 | Projects rendered from JS data | Edit `projectsData.en` and `projectsData.de` in `js/i18n.js` only |
-| AD-8 | Formspree AJAX contact form | Never remove `e.preventDefault()`; change email via Formspree dashboard |
+| AD-8 | mailto: contact form (no backend) | Change delivery email in `js/main.js` (`mailtoUrl`); keep `e.preventDefault()` |
 | AD-9 | WCAG AA contrast in light mode | Verify contrast with WebAIM checker before changing accent/primary tokens |
 | AD-10 | Inline SVG icons | Use `stroke="currentColor"` / `fill="currentColor"`; no icon fonts |
 
