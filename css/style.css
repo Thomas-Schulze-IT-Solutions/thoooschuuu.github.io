@@ -252,6 +252,13 @@ img {
   max-width: 700px;
 }
 
+.hero-logo {
+  width: clamp(180px, 40vw, 320px);
+  height: auto;
+  display: block;
+  margin: 0 auto 2rem;
+}
+
 .hero-badge {
   display: inline-block;
   padding: 0.35rem 1rem;
