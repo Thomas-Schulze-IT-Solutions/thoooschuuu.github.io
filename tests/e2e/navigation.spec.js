@@ -144,7 +144,7 @@ test.describe('SEO meta tags', () => {
 
   test('index.html has updated title for SEO', async ({ page }) => {
     await page.goto('/index.html');
-    await expect(page).toHaveTitle(/Software Architect.*\.NET Freelancer/);
+    await expect(page).toHaveTitle(/Softwarearchitekt.*\.NET-Freelancer/);
   });
 
   test('index.html has og:type=website', async ({ page }) => {
