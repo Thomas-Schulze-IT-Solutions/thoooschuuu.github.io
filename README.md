@@ -1,8 +1,8 @@
-# thomas-schulze-it-solutions.contact.io
+# Thomas Schulze IT Solutions
 
-Personal portfolio and contact site for **Thomas Schulze – IT Solutions**, published as a [GitHub Pages](https://pages.github.com/) static site.
+Personal portfolio and contact site for **Thomas Schulze – IT Solutions**, published via [GitHub Pages](https://pages.github.com/) with a custom domain.
 
-**Live URL:** `https://thoooschuuu.github.io/thomas-schulze-it-solutions.contact.io/`
+**Live URL:** <https://thomas-schulze-it-solutions.de>
 
 ---
 
@@ -43,7 +43,7 @@ The site supports **German and English** (language switcher in the footer) and a
 ## Repository structure
 
 ```
-thomas-schulze-it-solutions.contact.io/
+thoooschuuu.github.io/
 ├── index.html        # Landing / hero page
 ├── about.html        # About me page
 ├── projects.html     # Projects / portfolio page
@@ -241,7 +241,7 @@ Deployment is fully automatic via **GitHub Pages**:
 
 1. Push changes to the branch configured as the GitHub Pages source (typically `main`).
 2. GitHub Pages rebuilds and publishes the site within ~1 minute.
-3. The live URL is `https://thoooschuuu.github.io/thomas-schulze-it-solutions.contact.io/`.
+3. The live URL is `https://thomas-schulze-it-solutions.de`.
 
 > **Note:** The `tests.yml` CI workflow runs the Playwright test suite on pull requests but is separate from the GitHub Pages deployment. Deploying the site does not trigger tests, and test failures do not block deployment — tests are a PR-gate only.
 
