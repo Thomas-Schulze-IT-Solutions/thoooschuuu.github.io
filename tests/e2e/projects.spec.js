@@ -44,15 +44,19 @@ test.describe('Projects page – card rendering', () => {
   });
 
   test('ongoing project (no endDate) shows "heute" in German', async ({ page }) => {
-    // The most-recent card (Platform Team, no endDate) should show "heute" as end date
-    const firstPeriod = await page.locator('.project-period').first().textContent();
-    expect(firstPeriod).toContain('heute');
+    // Locate the known ongoing project by its stable title (language-independent)
+    const platformCard = page.locator('.project-card').filter({ hasText: 'Senior Software Engineer – Platform Team' });
+    await expect(platformCard).toHaveCount(1);
+    const periodText = await platformCard.locator('.project-period').textContent();
+    expect(periodText).toContain('heute');
   });
 
   test('ongoing project shows "present" in English', async ({ page }) => {
     await page.evaluate(() => window.i18n.setLanguage('en'));
-    const firstPeriod = await page.locator('.project-period').first().textContent();
-    expect(firstPeriod).toContain('present');
+    const platformCard = page.locator('.project-card').filter({ hasText: 'Senior Software Engineer – Platform Team' });
+    await expect(platformCard).toHaveCount(1);
+    const periodText = await platformCard.locator('.project-period').textContent();
+    expect(periodText).toContain('present');
   });
 
   test('each project card shows a customer name', async ({ page }) => {
