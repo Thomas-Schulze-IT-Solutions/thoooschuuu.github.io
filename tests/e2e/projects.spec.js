@@ -43,6 +43,22 @@ test.describe('Projects page – card rendering', () => {
     expect(first).toMatch(/–/);
   });
 
+  test('each project card shows a customer name', async ({ page }) => {
+    const customerNames = page.locator('.project-customer-name');
+    const count = await customerNames.count();
+    expect(count).toBeGreaterThan(0);
+    const first = await customerNames.first().textContent();
+    expect(first?.trim().length).toBeGreaterThan(0);
+  });
+
+  test('known customer names appear on the projects page', async ({ page }) => {
+    const pageText = await page.locator('#projectsGrid').textContent();
+    // Verify a representative sample of the expected customer names
+    expect(pageText).toContain('SoftwareONE AG');
+    expect(pageText).toContain('CID GmbH');
+    expect(pageText).toContain('Drefa MSG');
+  });
+
   test('projects are sorted most-recent first (multiple cards exist)', async ({ page }) => {
     const count = await page.locator('.project-card').count();
     expect(count).toBeGreaterThan(1);
