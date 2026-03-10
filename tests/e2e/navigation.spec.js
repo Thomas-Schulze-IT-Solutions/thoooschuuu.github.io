@@ -184,3 +184,36 @@ test.describe('SEO meta tags', () => {
     expect(ldJson['url']).toBe('https://thomas-schulze-it-solutions.de/');
   });
 });
+
+test.describe('SEO crawl files', () => {
+  test('robots.txt is served and contains Disallow: /tests/', async ({ request }) => {
+    const response = await request.get('/robots.txt');
+    expect(response.status()).toBe(200);
+    const body = await response.text();
+    expect(body).toContain('Disallow: /tests/');
+  });
+
+  test('robots.txt references the sitemap URL', async ({ request }) => {
+    const response = await request.get('/robots.txt');
+    expect(response.status()).toBe(200);
+    const body = await response.text();
+    expect(body).toContain('Sitemap: https://thomas-schulze-it-solutions.de/sitemap.xml');
+  });
+
+  test('sitemap.xml is served and lists all six pages', async ({ request }) => {
+    const response = await request.get('/sitemap.xml');
+    expect(response.status()).toBe(200);
+    const body = await response.text();
+    const expectedUrls = [
+      'https://thomas-schulze-it-solutions.de/',
+      'https://thomas-schulze-it-solutions.de/about.html',
+      'https://thomas-schulze-it-solutions.de/projects.html',
+      'https://thomas-schulze-it-solutions.de/contact.html',
+      'https://thomas-schulze-it-solutions.de/impressum.html',
+      'https://thomas-schulze-it-solutions.de/datenschutz.html',
+    ];
+    for (const url of expectedUrls) {
+      expect(body).toContain(url);
+    }
+  });
+});
