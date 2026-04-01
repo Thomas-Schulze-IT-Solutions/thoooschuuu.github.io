@@ -61,6 +61,45 @@ test.describe('Contact page – structure', () => {
   });
 });
 
+test.describe('Contact form – label accessibility', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.addInitScript(() => localStorage.removeItem('ts_lang'));
+    await page.goto('/contact.html');
+    await page.waitForLoadState('domcontentloaded');
+  });
+
+  test('name label is present and associated with input', async ({ page }) => {
+    const label = page.locator('label[for="name"]');
+    await expect(label).toBeAttached();
+    await expect(label).toContainText('Name');
+  });
+
+  test('email label is present and associated with input', async ({ page }) => {
+    const label = page.locator('label[for="email"]');
+    await expect(label).toBeAttached();
+    await expect(label).toContainText('E-Mail');
+  });
+
+  test('subject label is present and associated with select', async ({ page }) => {
+    const label = page.locator('label[for="subject"]');
+    await expect(label).toBeAttached();
+    await expect(label).toContainText('Betreff');
+  });
+
+  test('message label is present and associated with textarea', async ({ page }) => {
+    const label = page.locator('label[for="message"]');
+    await expect(label).toBeAttached();
+    await expect(label).toContainText('Nachricht');
+  });
+
+  test('labels translate to English', async ({ page }) => {
+    await page.evaluate(() => window.i18n.setLanguage('en'));
+    await expect(page.locator('label[for="email"]')).toContainText('Email');
+    await expect(page.locator('label[for="subject"]')).toContainText('Subject');
+    await expect(page.locator('label[for="message"]')).toContainText('Message');
+  });
+});
+
 test.describe('Contact page – form submit handler', () => {
   test.beforeEach(async ({ page }) => {
     await page.addInitScript(() => localStorage.removeItem('ts_lang'));
