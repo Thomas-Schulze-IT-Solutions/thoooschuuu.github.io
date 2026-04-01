@@ -10,6 +10,7 @@
   var activeFilter = null;        // null = All; resets to null on every page load
   var activeFilterIsGroup = false; // true when activeFilter is a filterGroups key
   var overflowExpanded = false;    // true when rare (1-project) individual buttons are shown
+  var activeDomainFilter = null;   // null = All domains
 
   /* ====================================================
      TRANSLATIONS
@@ -82,6 +83,13 @@
       'projects.filter.group.visualstudio':  'Visual Studio',
       'projects.filter.more':                'more',
       'projects.filter.less':                'Show less',
+      'projects.filter.domain.toolbar.label': 'Filter by domain',
+      'projects.filter.domain.all':           'All',
+      'projects.filter.domain.backend':       'Backend',
+      'projects.filter.domain.frontend':      'Frontend',
+      'projects.filter.domain.cloudinfra':    'Cloud / Infra',
+      'projects.filter.domain.architecture':  'Architecture',
+      'projects.filter.domain.cxanalytics':   'CX / Analytics',
 
       /* --- Contact page --- */
       'contact.label':                   'Let\'s Talk',
@@ -194,6 +202,13 @@
       'projects.filter.group.visualstudio':  'Visual Studio',
       'projects.filter.more':                'mehr',
       'projects.filter.less':                'Weniger',
+      'projects.filter.domain.toolbar.label': 'Nach Bereich filtern',
+      'projects.filter.domain.all':           'Alle',
+      'projects.filter.domain.backend':       'Backend',
+      'projects.filter.domain.frontend':      'Frontend',
+      'projects.filter.domain.cloudinfra':    'Cloud / Infra',
+      'projects.filter.domain.architecture':  'Architektur',
+      'projects.filter.domain.cxanalytics':   'CX / Analytics',
 
       /* --- Contact page --- */
       'contact.label':                   'Kontakt',
@@ -254,7 +269,8 @@
         customerName: 'Drefa MSG',
         startDate: '2010-11-30',
         endDate: '2013-01-30',
-        technologies: ['ASP.NET', 'JavaScript', '.NET Framework', 'TFS', 'C#']
+        technologies: ['ASP.NET', 'JavaScript', '.NET Framework', 'TFS', 'C#'],
+        domains: ['Frontend', 'Backend']
       },
       {
         id: 'fd075e8f-124f-44af-9a34-b12b91764614',
@@ -265,7 +281,8 @@
         customerName: 'Drefa MSG',
         startDate: '2011-12-31',
         endDate: '2012-09-29',
-        technologies: ['.NET Framework', 'C#', 'TFS']
+        technologies: ['.NET Framework', 'C#', 'TFS'],
+        domains: ['Backend']
       },
       {
         id: '3cd229c7-991c-4e1f-ab96-e38cbad9cc95',
@@ -276,7 +293,8 @@
         customerName: 'Drefa MSG',
         startDate: '2012-12-31',
         endDate: '2015-03-30',
-        technologies: ['WPF', 'WCF', '.NET Framework', 'C#', 'MEF', 'TFS']
+        technologies: ['WPF', 'WCF', '.NET Framework', 'C#', 'MEF', 'TFS'],
+        domains: ['Backend', 'Architecture']
       },
       {
         id: '8e2df56b-69b1-4e66-ad63-459294ee1e31',
@@ -287,7 +305,8 @@
         customerName: 'COMPAREX AG',
         startDate: '2015-03-31',
         endDate: '2016-06-29',
-        technologies: ['.NET Framework', 'C#', 'WPF', 'ASP.NET', 'JavaScript', 'TypeScript', 'SQL Server', 'Azure DevOps']
+        technologies: ['.NET Framework', 'C#', 'WPF', 'ASP.NET', 'JavaScript', 'TypeScript', 'SQL Server', 'Azure DevOps'],
+        domains: ['Frontend', 'Backend', 'CX / Analytics']
       },
       {
         id: 'ca62f89b-0b8c-4f04-a774-1c77e1afff4d',
@@ -298,7 +317,8 @@
         customerName: 'Lucht Probst Associates GmbH',
         startDate: '2016-06-30',
         endDate: '2018-07-30',
-        technologies: ['ASP.NET', '.NET Framework', 'C#', 'git', 'Angular', 'TypeScript', 'REST', 'Azure DevOps', 'Miro']
+        technologies: ['ASP.NET', '.NET Framework', 'C#', 'git', 'Angular', 'TypeScript', 'REST', 'Azure DevOps', 'Miro'],
+        domains: ['Frontend', 'Backend', 'Architecture']
       },
       {
         id: 'f8b79d7f-59bd-4b2f-acef-f47a505d56a4',
@@ -309,7 +329,8 @@
         customerName: 'CID GmbH',
         startDate: '2018-07-31',
         endDate: '2020-12-30',
-        technologies: ['ASP.NET Core', '.NET', 'C#', 'git', 'React', 'TypeScript', 'TDD', 'Jira', 'Bitbucket', 'Octopus', 'TeamCity', 'Miro']
+        technologies: ['ASP.NET Core', '.NET', 'C#', 'git', 'React', 'TypeScript', 'TDD', 'Jira', 'Bitbucket', 'Octopus', 'TeamCity', 'Miro'],
+        domains: ['Frontend', 'Backend', 'Architecture', 'Cloud / Infra']
       },
       {
         id: '4344b7a4-1452-48d7-aa38-5011eb8a80d5',
@@ -320,7 +341,8 @@
         customerName: 'CID GmbH',
         startDate: '2018-07-31',
         endDate: '2020-12-30',
-        technologies: ['JavaScript', 'ABTasty', 'git', 'Jira', 'Bitbucket', 'Octopus', 'TeamCity']
+        technologies: ['JavaScript', 'ABTasty', 'git', 'Jira', 'Bitbucket', 'Octopus', 'TeamCity'],
+        domains: ['Frontend', 'CX / Analytics']
       },
       {
         id: 'bf825263-df0d-4fd4-8d68-a548dc79b604',
@@ -331,7 +353,8 @@
         customerName: 'CID GmbH',
         startDate: '2019-02-28',
         endDate: '2020-12-30',
-        technologies: ['Miro', 'Jira']
+        technologies: ['Miro', 'Jira'],
+        domains: ['Architecture']
       },
       {
         id: '69159377-01c8-4b64-9e1c-5d1902e35030',
@@ -342,7 +365,8 @@
         customerName: 'SoftwareONE AG',
         startDate: '2020-03-31',
         endDate: '2023-02-27',
-        technologies: ['OpenAPI 3', 'Azure DevOps', 'git', 'Miro', 'Spectral', 'REST', 'Swagger', 'YAML']
+        technologies: ['OpenAPI 3', 'Azure DevOps', 'git', 'Miro', 'Spectral', 'REST', 'Swagger', 'YAML'],
+        domains: ['Backend', 'Architecture']
       },
       {
         id: '37d0d0e0-21af-4cfb-8ecc-7ba37ee60497',
@@ -353,7 +377,8 @@
         customerName: 'SoftwareONE AG',
         startDate: '2020-09-30',
         endDate: '2023-02-27',
-        technologies: ['Target Process', 'Azure DevOps', 'Azure', 'Miro']
+        technologies: ['Target Process', 'Azure DevOps', 'Azure', 'Miro'],
+        domains: ['Cloud / Infra', 'Architecture']
       },
       {
         id: '5eed78cc-5c59-4046-98aa-bc7ce0ad701a',
@@ -364,7 +389,8 @@
         customerName: 'SoftwareONE AG',
         startDate: '2020-12-31',
         endDate: '2023-02-27',
-        technologies: ['.NET', 'ASP.NET Core', 'Azure', 'API Management', 'AWS', 'C#', 'git', 'Terraform', 'REST', 'Messaging', 'Azure DevOps', 'Auth0', 'Target Process', 'ServiceNow']
+        technologies: ['.NET', 'ASP.NET Core', 'Azure', 'API Management', 'AWS', 'C#', 'git', 'Terraform', 'REST', 'Messaging', 'Azure DevOps', 'Auth0', 'Target Process', 'ServiceNow'],
+        domains: ['Backend', 'Cloud / Infra', 'Architecture']
       },
       {
         id: '7f34bc9c-0e46-485b-baff-6d045db34a8c',
@@ -375,7 +401,8 @@
         customerName: 'Groß, Weber & Partner',
         startDate: '2023-01-01',
         endDate: '2025-08-31',
-        technologies: ['.NET Framework', '.NET 6', '.NET 8', 'NHibernate', 'PowerShell', 'Azure DevOps', 'Jenkins', 'MS SQL Server', 'Visual Studio', 'Visual Studio Code']
+        technologies: ['.NET Framework', '.NET 6', '.NET 8', 'NHibernate', 'PowerShell', 'Azure DevOps', 'Jenkins', 'MS SQL Server', 'Visual Studio', 'Visual Studio Code'],
+        domains: ['Backend', 'Architecture']
       },
       {
         id: '541e6958-2258-49fc-ad29-f520f63fa576',
@@ -385,7 +412,8 @@
         customerDomain: 'Energy Sector (Platform Team)',
         customerName: 'Groß, Weber & Partner',
         startDate: '2025-08-01',
-        technologies: ['.NET Framework', '.NET 8', '.NET 10', 'NHibernate', 'PowerShell', 'Azure DevOps', 'Jenkins', 'Visual Studio', 'Visual Studio Code']
+        technologies: ['.NET Framework', '.NET 8', '.NET 10', 'NHibernate', 'PowerShell', 'Azure DevOps', 'Jenkins', 'Visual Studio', 'Visual Studio Code'],
+        domains: ['Backend', 'Architecture']
       }
     ],
 
@@ -399,7 +427,8 @@
         customerName: 'Drefa MSG',
         startDate: '2010-11-30',
         endDate: '2013-01-30',
-        technologies: ['ASP.NET', 'JavaScript', '.NET Framework', 'TFS', 'C#']
+        technologies: ['ASP.NET', 'JavaScript', '.NET Framework', 'TFS', 'C#'],
+        domains: ['Frontend', 'Backend']
       },
       {
         id: 'fd075e8f-124f-44af-9a34-b12b91764614',
@@ -410,7 +439,8 @@
         customerName: 'Drefa MSG',
         startDate: '2011-12-31',
         endDate: '2012-09-29',
-        technologies: ['.NET Framework', 'C#', 'TFS']
+        technologies: ['.NET Framework', 'C#', 'TFS'],
+        domains: ['Backend']
       },
       {
         id: '3cd229c7-991c-4e1f-ab96-e38cbad9cc95',
@@ -421,7 +451,8 @@
         customerName: 'Drefa MSG',
         startDate: '2012-12-31',
         endDate: '2015-03-30',
-        technologies: ['WPF', 'WCF', '.NET Framework', 'C#', 'MEF', 'TFS']
+        technologies: ['WPF', 'WCF', '.NET Framework', 'C#', 'MEF', 'TFS'],
+        domains: ['Backend', 'Architecture']
       },
       {
         id: '8e2df56b-69b1-4e66-ad63-459294ee1e31',
@@ -432,7 +463,8 @@
         customerName: 'COMPAREX AG',
         startDate: '2015-03-31',
         endDate: '2016-06-29',
-        technologies: ['.NET Framework', 'C#', 'WPF', 'ASP.NET', 'JavaScript', 'TypeScript', 'SQL Server', 'Azure DevOps']
+        technologies: ['.NET Framework', 'C#', 'WPF', 'ASP.NET', 'JavaScript', 'TypeScript', 'SQL Server', 'Azure DevOps'],
+        domains: ['Frontend', 'Backend', 'CX / Analytics']
       },
       {
         id: 'ca62f89b-0b8c-4f04-a774-1c77e1afff4d',
@@ -443,7 +475,8 @@
         customerName: 'Lucht Probst Associates GmbH',
         startDate: '2016-06-30',
         endDate: '2018-07-30',
-        technologies: ['ASP.NET', '.NET Framework', 'C#', 'git', 'Angular', 'TypeScript', 'REST', 'Azure DevOps', 'Miro']
+        technologies: ['ASP.NET', '.NET Framework', 'C#', 'git', 'Angular', 'TypeScript', 'REST', 'Azure DevOps', 'Miro'],
+        domains: ['Frontend', 'Backend', 'Architecture']
       },
       {
         id: 'f8b79d7f-59bd-4b2f-acef-f47a505d56a4',
@@ -454,7 +487,8 @@
         customerName: 'CID GmbH',
         startDate: '2018-07-31',
         endDate: '2020-12-30',
-        technologies: ['ASP.NET Core', '.NET', 'C#', 'git', 'React', 'TypeScript', 'TDD', 'Jira', 'Bitbucket', 'Octopus', 'TeamCity', 'Miro']
+        technologies: ['ASP.NET Core', '.NET', 'C#', 'git', 'React', 'TypeScript', 'TDD', 'Jira', 'Bitbucket', 'Octopus', 'TeamCity', 'Miro'],
+        domains: ['Frontend', 'Backend', 'Architecture', 'Cloud / Infra']
       },
       {
         id: '4344b7a4-1452-48d7-aa38-5011eb8a80d5',
@@ -465,7 +499,8 @@
         customerName: 'CID GmbH',
         startDate: '2018-07-31',
         endDate: '2020-12-30',
-        technologies: ['JavaScript', 'ABTasty', 'git', 'Jira', 'Bitbucket', 'Octopus', 'TeamCity']
+        technologies: ['JavaScript', 'ABTasty', 'git', 'Jira', 'Bitbucket', 'Octopus', 'TeamCity'],
+        domains: ['Frontend', 'CX / Analytics']
       },
       {
         id: 'bf825263-df0d-4fd4-8d68-a548dc79b604',
@@ -476,7 +511,8 @@
         customerName: 'CID GmbH',
         startDate: '2019-02-28',
         endDate: '2020-12-30',
-        technologies: ['Miro', 'Jira']
+        technologies: ['Miro', 'Jira'],
+        domains: ['Architecture']
       },
       {
         id: '69159377-01c8-4b64-9e1c-5d1902e35030',
@@ -487,7 +523,8 @@
         customerName: 'SoftwareONE AG',
         startDate: '2020-03-31',
         endDate: '2023-02-27',
-        technologies: ['OpenAPI 3', 'Azure DevOps', 'git', 'Miro', 'Spectral', 'REST', 'Swagger', 'YAML']
+        technologies: ['OpenAPI 3', 'Azure DevOps', 'git', 'Miro', 'Spectral', 'REST', 'Swagger', 'YAML'],
+        domains: ['Backend', 'Architecture']
       },
       {
         id: '37d0d0e0-21af-4cfb-8ecc-7ba37ee60497',
@@ -498,7 +535,8 @@
         customerName: 'SoftwareONE AG',
         startDate: '2020-09-30',
         endDate: '2023-02-27',
-        technologies: ['Target Process', 'Azure DevOps', 'Azure', 'Miro']
+        technologies: ['Target Process', 'Azure DevOps', 'Azure', 'Miro'],
+        domains: ['Cloud / Infra', 'Architecture']
       },
       {
         id: '5eed78cc-5c59-4046-98aa-bc7ce0ad701a',
@@ -509,7 +547,8 @@
         customerName: 'SoftwareONE AG',
         startDate: '2020-12-31',
         endDate: '2023-02-27',
-        technologies: ['.NET', 'ASP.NET Core', 'Azure', 'API Management', 'AWS', 'C#', 'git', 'Terraform', 'REST', 'Messaging', 'Azure DevOps', 'Auth0', 'Target Process', 'ServiceNow']
+        technologies: ['.NET', 'ASP.NET Core', 'Azure', 'API Management', 'AWS', 'C#', 'git', 'Terraform', 'REST', 'Messaging', 'Azure DevOps', 'Auth0', 'Target Process', 'ServiceNow'],
+        domains: ['Backend', 'Cloud / Infra', 'Architecture']
       },
       {
         id: '7f34bc9c-0e46-485b-baff-6d045db34a8c',
@@ -520,7 +559,8 @@
         customerName: 'Groß, Weber & Partner',
         startDate: '2023-01-01',
         endDate: '2025-08-31',
-        technologies: ['.NET Framework', '.NET 6', '.NET 8', 'NHibernate', 'PowerShell', 'Azure DevOps', 'Jenkins', 'MS SQL Server', 'Visual Studio', 'Visual Studio Code']
+        technologies: ['.NET Framework', '.NET 6', '.NET 8', 'NHibernate', 'PowerShell', 'Azure DevOps', 'Jenkins', 'MS SQL Server', 'Visual Studio', 'Visual Studio Code'],
+        domains: ['Backend', 'Architecture']
       },
       {
         id: '541e6958-2258-49fc-ad29-f520f63fa576',
@@ -530,7 +570,8 @@
         customerDomain: 'Energiewirtschaft (Platform Team)',
         customerName: 'Groß, Weber & Partner',
         startDate: '2025-08-01',
-        technologies: ['.NET Framework', '.NET 8', '.NET 10', 'NHibernate', 'PowerShell', 'Azure DevOps', 'Jenkins', 'Visual Studio', 'Visual Studio Code']
+        technologies: ['.NET Framework', '.NET 8', '.NET 10', 'NHibernate', 'PowerShell', 'Azure DevOps', 'Jenkins', 'Visual Studio', 'Visual Studio Code'],
+        domains: ['Backend', 'Architecture']
       }
     ]
   };
@@ -552,6 +593,9 @@
     { key: 'alm',            members: ['Jira', 'Target Process', 'ServiceNow'] },
     { key: 'visualstudio',   members: ['Visual Studio', 'Visual Studio Code'] }
   ];
+
+  // Pipe (|) is the data-domains separator — domain values must not contain it
+  var domainFilterOrder = ['Backend', 'Frontend', 'Cloud / Infra', 'Architecture', 'CX / Analytics'];
 
   /* ====================================================
      DOMAIN ICONS
@@ -790,6 +834,62 @@
     };
   }
 
+  function renderDomainFilterButtons(lang) {
+    var container = document.getElementById('projectsDomainFilter');
+    if (!container) return;
+
+    var t = translations[lang];
+
+    var domainKeyMap = {
+      'Backend':        'projects.filter.domain.backend',
+      'Frontend':       'projects.filter.domain.frontend',
+      'Cloud / Infra':  'projects.filter.domain.cloudinfra',
+      'Architecture':   'projects.filter.domain.architecture',
+      'CX / Analytics': 'projects.filter.domain.cxanalytics'
+    };
+
+    var allLabel = t['projects.filter.domain.all'];
+    var html = '<button class="filter-btn' + (activeDomainFilter === null ? ' is-active' : '') +
+      '" data-domain-filter="*" type="button">' + escapeHtml(allLabel) + '</button>';
+
+    for (var i = 0; i < domainFilterOrder.length; i++) {
+      var domain = domainFilterOrder[i];
+      var label = t[domainKeyMap[domain]] || domain;
+      var isActive = activeDomainFilter === domain;
+      html += '<button class="filter-btn' + (isActive ? ' is-active' : '') +
+        '" data-domain-filter="' + escapeHtml(domain) + '" type="button">' +
+        escapeHtml(label) + '</button>';
+    }
+
+    container.setAttribute('aria-label', t['projects.filter.domain.toolbar.label']);
+    container.innerHTML = html;
+
+    container.onclick = function (e) {
+      var btn = e.target.closest('.filter-btn');
+      if (!btn) return;
+
+      var domainVal = btn.getAttribute('data-domain-filter');
+      if (domainVal === '*') {
+        activeDomainFilter = null;
+      } else if (domainVal) {
+        if (activeDomainFilter === domainVal) {
+          activeDomainFilter = null;
+        } else {
+          activeDomainFilter = domainVal;
+        }
+      }
+
+      var buttons = container.querySelectorAll('.filter-btn');
+      for (var i = 0; i < buttons.length; i++) {
+        var b = buttons[i];
+        var bVal = b.getAttribute('data-domain-filter');
+        var isActive = activeDomainFilter === null ? (bVal === '*') : (bVal === activeDomainFilter);
+        b.classList.toggle('is-active', isActive);
+      }
+      applyFilter();
+    };
+  }
+
   function applyFilter() {
     var grid = document.getElementById('projectsGrid');
     if (!grid) return;
@@ -797,20 +897,27 @@
     var cards = grid.querySelectorAll('.project-card');
     for (var i = 0; i < cards.length; i++) {
       var card = cards[i];
-      if (activeMembers === null) {
-        card.classList.remove('is-hidden');
-      } else {
+
+      // Tech axis
+      var techMatch = true;
+      if (activeMembers !== null) {
         var cardTechs = (card.getAttribute('data-technologies') || '').split('|');
-        var matches = false;
-        for (var j = 0; j < cardTechs.length; j++) {
-          for (var m = 0; m < activeMembers.length; m++) {
-            if (cardTechs[j] === activeMembers[m]) { matches = true; break; }
+        techMatch = false;
+        for (var j = 0; j < cardTechs.length && !techMatch; j++) {
+          for (var m = 0; m < activeMembers.length && !techMatch; m++) {
+            if (cardTechs[j] === activeMembers[m]) techMatch = true;
           }
-          if (matches) break;
         }
-        if (matches) { card.classList.remove('is-hidden'); }
-        else { card.classList.add('is-hidden'); }
       }
+
+      // Domain axis
+      var domainMatch = true;
+      if (activeDomainFilter !== null) {
+        var cardDomains = (card.getAttribute('data-domains') || '').split('|');
+        domainMatch = cardDomains.indexOf(activeDomainFilter) !== -1;
+      }
+
+      card.classList.toggle('is-hidden', !(techMatch && domainMatch));
     }
   }
 
@@ -839,7 +946,9 @@
       var headerId = 'ph-' + safeId;
       var bodyId   = 'pb-' + safeId;
 
-      return '<article class="project-card" id="pc-' + safeId + '" data-technologies="' + escapeHtml(p.technologies.join('|')) + '">' +
+      return '<article class="project-card" id="pc-' + safeId + '"' +
+        ' data-technologies="' + escapeHtml(p.technologies.join('|')) + '"' +
+        ' data-domains="' + escapeHtml((p.domains || []).join('|')) + '">' +
         '<div class="project-card-header" id="' + headerId + '" role="button" tabindex="0" aria-expanded="false" aria-controls="' + bodyId + '">' +
           '<div class="project-card-header-info">' +
             '<div class="project-meta">' +
@@ -961,6 +1070,7 @@
     document.documentElement.setAttribute('lang', lang);
 
     renderFilterButtons(lang);
+    renderDomainFilterButtons(lang);
     renderProjects(lang);
   }
 
