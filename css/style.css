@@ -1204,6 +1204,13 @@ html[data-theme="light"] .navbar-brand img {
   display: none;
 }
 
+/* ===== Domain Filter ===== */
+.project-filter--domain {
+  margin-top: 0.25rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+}
+
 /* ===== Responsive ===== */
 @media (max-width: 768px) {
   .hamburger {

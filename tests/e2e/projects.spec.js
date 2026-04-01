@@ -511,3 +511,114 @@ test.describe('Projects page – filter overflow toggle', () => {
   });
 });
 
+test.describe('Projects page – domain filter', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.addInitScript(() => localStorage.removeItem('ts_lang'));
+    await page.goto('/projects.html');
+  });
+
+  // Container & initial state
+  test('#projectsDomainFilter container exists and is attached', async ({ page }) => {
+    await expect(page.locator('#projectsDomainFilter')).toBeAttached();
+  });
+
+  test('domain "All" button is rendered with is-active by default', async ({ page }) => {
+    const allBtn = page.locator('#projectsDomainFilter .filter-btn[data-domain-filter="*"]');
+    await expect(allBtn).toBeVisible();
+    await expect(allBtn).toHaveClass(/is-active/);
+  });
+
+  test('buttons exist for each of the 5 domain values', async ({ page }) => {
+    const domains = ['Backend', 'Frontend', 'Cloud / Infra', 'Architecture', 'CX / Analytics'];
+    for (const domain of domains) {
+      await expect(page.locator(`#projectsDomainFilter .filter-btn[data-domain-filter="${domain}"]`)).toBeVisible();
+    }
+  });
+
+  // Filtering behaviour
+  test('clicking "Backend" hides non-Backend cards and keeps ≥1 visible', async ({ page }) => {
+    await page.locator('#projectsDomainFilter .filter-btn[data-domain-filter="Backend"]').click();
+    const visible = await page.locator('.project-card:not(.is-hidden)').count();
+    const hidden  = await page.locator('.project-card.is-hidden').count();
+    expect(visible).toBeGreaterThan(0);
+    expect(hidden).toBeGreaterThan(0);
+  });
+
+  test('clicking "Backend" gives it is-active and removes is-active from "All"', async ({ page }) => {
+    const backendBtn = page.locator('#projectsDomainFilter .filter-btn[data-domain-filter="Backend"]');
+    const allBtn     = page.locator('#projectsDomainFilter .filter-btn[data-domain-filter="*"]');
+    await backendBtn.click();
+    await expect(backendBtn).toHaveClass(/is-active/);
+    await expect(allBtn).not.toHaveClass(/is-active/);
+  });
+
+  test('clicking the active domain button again toggles it off (0 hidden cards)', async ({ page }) => {
+    const backendBtn = page.locator('#projectsDomainFilter .filter-btn[data-domain-filter="Backend"]');
+    await backendBtn.click();
+    await backendBtn.click();
+    const hidden = await page.locator('.project-card.is-hidden').count();
+    expect(hidden).toBe(0);
+  });
+
+  test('clicking "All" after a filter resets hidden count to 0', async ({ page }) => {
+    await page.locator('#projectsDomainFilter .filter-btn[data-domain-filter="Backend"]').click();
+    await page.locator('#projectsDomainFilter .filter-btn[data-domain-filter="*"]').click();
+    const hidden = await page.locator('.project-card.is-hidden').count();
+    expect(hidden).toBe(0);
+  });
+
+  // AND-logic cross-axis
+  test('visible cards after domain filter all contain the selected domain in data-domains', async ({ page }) => {
+    await page.locator('#projectsDomainFilter .filter-btn[data-domain-filter="Backend"]').click();
+    const visibleCards = page.locator('.project-card:not(.is-hidden)');
+    const count = await visibleCards.count();
+    expect(count).toBeGreaterThan(0);
+    for (let i = 0; i < count; i++) {
+      const domains = await visibleCards.nth(i).getAttribute('data-domains');
+      expect(domains).toContain('Backend');
+    }
+  });
+
+  test('AND logic: combining tech and domain filters shows ≤ cards than tech filter alone', async ({ page }) => {
+    await page.locator('.filter-btn[data-filter="C#"]').click();
+    const techOnly = await page.locator('.project-card:not(.is-hidden)').count();
+    await page.locator('#projectsDomainFilter .filter-btn[data-domain-filter="Frontend"]').click();
+    const both = await page.locator('.project-card:not(.is-hidden)').count();
+    expect(both).toBeLessThanOrEqual(techOnly);
+  });
+
+  // Internationalisation
+  test('"Architecture" button shows "Architecture" in EN and "Architektur" in DE', async ({ page }) => {
+    const btn = page.locator('#projectsDomainFilter .filter-btn[data-domain-filter="Architecture"]');
+    await expect(btn).toHaveText('Architektur');
+    await page.evaluate(() => window.i18n.setLanguage('en'));
+    await expect(btn).toHaveText('Architecture');
+  });
+
+  test('"All" button shows "Alle" in DE and "All" in EN', async ({ page }) => {
+    const btn = page.locator('#projectsDomainFilter .filter-btn[data-domain-filter="*"]');
+    await expect(btn).toHaveText('Alle');
+    await page.evaluate(() => window.i18n.setLanguage('en'));
+    await expect(btn).toHaveText('All');
+  });
+
+  test('domain filter state persists after language switch', async ({ page }) => {
+    await page.locator('#projectsDomainFilter .filter-btn[data-domain-filter="Backend"]').click();
+    const hiddenBefore = await page.locator('.project-card.is-hidden').count();
+    await page.evaluate(() => window.i18n.setLanguage('en'));
+    const hiddenAfter = await page.locator('.project-card.is-hidden').count();
+    expect(hiddenAfter).toBe(hiddenBefore);
+  });
+
+  // Data attribute
+  test('each project card has a non-empty data-domains attribute', async ({ page }) => {
+    const cards = page.locator('.project-card');
+    const count = await cards.count();
+    expect(count).toBeGreaterThan(0);
+    for (let i = 0; i < count; i++) {
+      const domains = await cards.nth(i).getAttribute('data-domains');
+      expect(domains).toBeTruthy();
+    }
+  });
+});
+
