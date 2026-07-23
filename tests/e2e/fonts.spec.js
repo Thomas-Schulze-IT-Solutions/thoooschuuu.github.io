@@ -106,3 +106,33 @@ test.describe('Removed latin-ext font files are not served', () => {
     });
   }
 });
+
+test.describe('Arimo fonts are preloaded', () => {
+  // Every page preloads the two non-italic Arimo weights to cut the
+  // first-visit FOUT. Italic variants must NOT be preloaded.
+  const ALL_PAGES = [...PAGES, '/404.html'];
+
+  for (const path of ALL_PAGES) {
+    test(`${path} preloads the 400 + 700 normal weights`, async ({ page }) => {
+      await page.goto(path);
+      await page.waitForLoadState('domcontentloaded');
+
+      for (const weight of ['400', '700']) {
+        const link = page.locator(
+          `link[rel="preload"][as="font"][href="fonts/arimo-latin-${weight}-normal.woff2"]`
+        );
+        await expect(link).toHaveCount(1);
+        await expect(link).toHaveAttribute('type', 'font/woff2');
+        // crossorigin is required for preloaded fonts to be reused.
+        await expect(link).toHaveAttribute('crossorigin', '');
+      }
+    });
+
+    test(`${path} does not preload italic weights`, async ({ page }) => {
+      await page.goto(path);
+      await page.waitForLoadState('domcontentloaded');
+      const italicPreloads = page.locator('link[rel="preload"][as="font"][href*="italic"]');
+      await expect(italicPreloads).toHaveCount(0);
+    });
+  }
+});

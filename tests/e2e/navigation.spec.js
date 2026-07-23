@@ -490,3 +490,29 @@ test.describe('SEO crawl files', () => {
     });
   }
 });
+
+test.describe('No inline styles (AD-2)', () => {
+  // All styling lives in css/style.css — no page may carry a style="..."
+  // attribute. Checked against the raw HTML source so runtime JS that sets
+  // element.style (hamburger, accordion, form) can't cause false positives.
+  // Note: onerror="...this.style.display..." contains ".style." but never the
+  // attribute token `style="`, so it is correctly ignored.
+  const htmlPages = [
+    '/index.html',
+    '/about.html',
+    '/projects.html',
+    '/contact.html',
+    '/impressum.html',
+    '/datenschutz.html',
+    '/404.html',
+  ];
+
+  for (const path of htmlPages) {
+    test(`${path} has no inline style attribute`, async ({ request }) => {
+      const response = await request.get(path);
+      expect(response.status()).toBe(200);
+      const body = await response.text();
+      expect(body, `${path} must not contain an inline style="" attribute`).not.toMatch(/\sstyle\s*=/);
+    });
+  }
+});
