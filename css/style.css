@@ -62,6 +62,9 @@
   --radius: 12px;
   --shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
   --transition: 0.3s ease;
+  --color-linkedin: #0a66c2;
+  --available-bg: rgba(0, 212, 255, 0.06);
+  --available-border: rgba(0, 212, 255, 0.2);
   /* Theme-sensitive surface colours (overridden in light mode) */
   --navbar-bg: rgba(16, 14, 8, 0.92);
   --dot-color: rgba(255, 255, 255, 0.04);
@@ -410,6 +413,12 @@ img {
   color: var(--dark);
   box-shadow: 0 0 40px rgba(255, 194, 80, 0.25);
   letter-spacing: 0.05em;
+}
+
+/* Hidden until the avatar photo fails to load; the img onerror sets
+   inline display:flex, which overrides this rule. */
+.avatar-fallback {
+  display: none;
 }
 
 .about-name {
@@ -797,6 +806,7 @@ img {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   transition: all var(--transition);
+  text-decoration: none;
 }
 
 .contact-item:hover {
@@ -1213,6 +1223,115 @@ html[data-theme="light"] .navbar-brand img {
   top: 0;
   outline: 3px solid var(--accent);
   outline-offset: 2px;
+}
+
+/* ===== Value Propositions (index) ===== */
+.value-props {
+  padding: 3rem 2rem;
+  background: var(--darker);
+}
+
+.value-props-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.value-prop {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.value-prop-icon {
+  font-size: 1.8rem;
+}
+
+.value-prop-title {
+  color: var(--white);
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.value-prop-text {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* ===== Availability note (contact) ===== */
+.availability-note {
+  margin-top: 2rem;
+  padding: 1.25rem;
+  background: var(--available-bg);
+  border: 1px solid var(--available-border);
+  border-radius: var(--radius);
+}
+
+.availability-note strong {
+  color: var(--accent);
+  font-size: 0.85rem;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.availability-note span {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* ===== Brand / accent icon colours ===== */
+.icon-linkedin {
+  color: var(--color-linkedin);
+}
+
+.icon-accent {
+  color: var(--accent);
+}
+
+/* ===== Layout helpers ===== */
+.btn-block {
+  width: 100%;
+  justify-content: center;
+}
+
+.about-cta {
+  margin-top: 1.5rem;
+}
+
+.about-content-heading {
+  margin-top: 2.5rem;
+}
+
+.offer-list {
+  color: var(--text-muted);
+  line-height: 2;
+  padding-left: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.projects-cta {
+  text-align: center;
+  margin-top: 3.5rem;
+}
+
+.projects-cta-text {
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+}
+
+.notfound-emoji {
+  font-size: 6rem;
+  margin: 1rem 0;
+}
+
+.notfound-cta {
+  margin-top: 2rem;
 }
 
 /* ===== Responsive ===== */

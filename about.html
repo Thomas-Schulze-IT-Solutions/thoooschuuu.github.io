@@ -99,7 +99,7 @@
         <aside class="about-avatar-wrapper">
           <div class="avatar-photo-wrapper">
             <img src="img/thomas-schulze.jpg" alt="Thomas Schulze" class="avatar-photo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-            <div class="avatar-circle avatar-fallback" style="display:none;">TS</div>
+            <div class="avatar-circle avatar-fallback">TS</div>
           </div>
           <p class="about-name">Thomas Schulze</p>
           <p class="about-role" data-i18n="about.role">Freelance Software Engineer</p>
@@ -129,8 +129,8 @@
             </a>
           </div>
 
-          <div style="margin-top: 1.5rem;">
-            <a href="contact.html" class="btn btn-primary" style="width: 100%; justify-content: center;" data-i18n="about.hire">Hire Me</a>
+          <div class="about-cta">
+            <a href="contact.html" class="btn btn-primary btn-block" data-i18n="about.hire">Hire Me</a>
           </div>
         </aside>
 
@@ -167,7 +167,7 @@
             </div>
           </div>
 
-          <h2 style="margin-top: 2.5rem;" data-i18n="about.skills.title">Technical Skills</h2>
+          <h2 class="about-content-heading" data-i18n="about.skills.title">Technical Skills</h2>
           <p data-i18n="about.skills.desc">Technologies and tools I work with:</p>
 
           <div class="skills-grid">
@@ -188,9 +188,9 @@
             <div class="skill-chip"><span class="skill-dot"></span>Agile / Scrum</div>
           </div>
 
-          <h2 style="margin-top: 2.5rem;" data-i18n="about.offer.title">What I Offer</h2>
+          <h2 class="about-content-heading" data-i18n="about.offer.title">What I Offer</h2>
           <p data-i18n="about.offer.desc">As a freelancer I offer end-to-end software development services:</p>
-          <ul style="color: var(--text-muted); line-height: 2; padding-left: 1.5rem; margin-top: 0.5rem;" data-i18n-html="about.offer.list">
+          <ul class="offer-list" data-i18n-html="about.offer.list">
             <li>Custom web application development (frontend &amp; backend)</li>
             <li>REST API &amp; microservice architecture design and implementation</li>
             <li>Legacy system modernisation and refactoring</li>
