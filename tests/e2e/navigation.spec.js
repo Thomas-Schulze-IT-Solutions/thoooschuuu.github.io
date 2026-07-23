@@ -512,7 +512,9 @@ test.describe('No inline styles (AD-2)', () => {
       const response = await request.get(path);
       expect(response.status()).toBe(200);
       const body = await response.text();
-      expect(body, `${path} must not contain an inline style="" attribute`).not.toMatch(/\sstyle\s*=/);
+      // Case-insensitive: HTML attribute names are case-insensitive, so
+      // STYLE= / mixed-case must be caught too.
+      expect(body, `${path} must not contain an inline style="" attribute`).not.toMatch(/\sstyle\s*=/i);
     });
   }
 });

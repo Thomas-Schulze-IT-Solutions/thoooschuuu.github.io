@@ -123,8 +123,9 @@ test.describe('Arimo fonts are preloaded', () => {
         );
         await expect(link).toHaveCount(1);
         await expect(link).toHaveAttribute('type', 'font/woff2');
-        // crossorigin is required for preloaded fonts to be reused.
-        await expect(link).toHaveAttribute('crossorigin', '');
+        // crossorigin is required for preloaded fonts to be reused. Accept the
+        // boolean form ("") or the explicit "anonymous"; reject use-credentials.
+        await expect(link).toHaveAttribute('crossorigin', /^(anonymous)?$/);
       }
     });
 
