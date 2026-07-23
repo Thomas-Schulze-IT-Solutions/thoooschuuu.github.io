@@ -63,8 +63,8 @@
   --shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
   --transition: 0.3s ease;
   --color-linkedin: #0a66c2;
-  --available-bg: rgba(0, 212, 255, 0.06);
-  --available-border: rgba(0, 212, 255, 0.2);
+  --available-bg: rgba(255, 194, 80, 0.06);
+  --available-border: rgba(255, 194, 80, 0.2);
   /* Theme-sensitive surface colours (overridden in light mode) */
   --navbar-bg: rgba(16, 14, 8, 0.92);
   --dot-color: rgba(255, 255, 255, 0.04);
