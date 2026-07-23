@@ -102,6 +102,8 @@
       document.documentElement.setAttribute('data-theme', t);
     })();
   </script>
+  <link rel="preload" href="fonts/arimo-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="fonts/arimo-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -142,8 +144,8 @@
       <div class="projects-grid" id="projectsGrid"></div>
 
       <!-- CTA -->
-      <div style="text-align: center; margin-top: 3.5rem;">
-        <p style="color: var(--text-muted); margin-bottom: 1.25rem;" data-i18n="projects.cta.text">
+      <div class="projects-cta">
+        <p class="projects-cta-text" data-i18n="projects.cta.text">
           Have a project in mind? Let's build something great together.
         </p>
         <a href="contact.html" class="btn btn-primary" data-i18n="projects.cta.btn">Get in Touch →</a>
