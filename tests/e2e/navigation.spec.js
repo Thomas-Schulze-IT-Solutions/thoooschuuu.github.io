@@ -204,6 +204,37 @@ test.describe('SEO meta tags', () => {
     });
   }
 
+  for (const { path } of pages) {
+    test(`${path} has SVG favicon link (regression)`, async ({ page }) => {
+      await page.goto(path);
+      await page.waitForLoadState('domcontentloaded');
+      const href = await page.locator('link[rel="icon"][type="image/svg+xml"]').getAttribute('href');
+      expect(href).toBe('img/logo-icon.svg');
+    });
+
+    test(`${path} has 48x48 PNG favicon link`, async ({ page }) => {
+      await page.goto(path);
+      await page.waitForLoadState('domcontentloaded');
+      const href = await page.locator('link[rel="icon"][type="image/png"][sizes="48x48"]').getAttribute('href');
+      expect(href).toBe('img/favicon-48x48.png');
+    });
+
+    test(`${path} has 32x32 PNG favicon link`, async ({ page }) => {
+      await page.goto(path);
+      await page.waitForLoadState('domcontentloaded');
+      const href = await page.locator('link[rel="icon"][type="image/png"][sizes="32x32"]').getAttribute('href');
+      expect(href).toBe('img/favicon-32x32.png');
+    });
+
+    test(`${path} has apple-touch-icon link`, async ({ page }) => {
+      await page.goto(path);
+      await page.waitForLoadState('domcontentloaded');
+      const link = page.locator('link[rel="apple-touch-icon"]');
+      await expect(link).toHaveAttribute('href', 'img/apple-touch-icon.png');
+      await expect(link).toHaveAttribute('sizes', '180x180');
+    });
+  }
+
   test('index.html has JSON-LD Person structured data', async ({ page }) => {
     await page.goto('/index.html');
     await page.waitForLoadState('domcontentloaded');
@@ -215,6 +246,19 @@ test.describe('SEO meta tags', () => {
     expect(ldJson['@type']).toBe('Person');
     expect(ldJson['name']).toBe('Thomas Schulze');
     expect(ldJson['url']).toBe('https://thomas-schulze-it-solutions.de/');
+  });
+
+  test('index.html has ProfessionalService JSON-LD business entity', async ({ page }) => {
+    await page.goto('/index.html');
+    await page.waitForLoadState('domcontentloaded');
+    const blocks = await page.evaluate(() =>
+      Array.from(document.querySelectorAll('script[type="application/ld+json"]'))
+        .map(el => JSON.parse(el.textContent)));
+    const biz = blocks.find(b => ['ProfessionalService', 'LocalBusiness'].includes(b['@type']));
+    expect(biz).toBeTruthy();
+    expect(biz.name).toBe('Thomas Schulze IT Solutions');
+    expect(biz.address.addressLocality).toBe('Leipzig');
+    expect(biz.address.addressCountry).toBe('DE');
   });
 
   test('about.html has JSON-LD ProfilePage structured data', async ({ page }) => {
@@ -321,6 +365,14 @@ test.describe('Custom 404 page', () => {
     const content = await page.locator('meta[name="robots"]').getAttribute('content');
     expect(content).toBe('noindex, nofollow');
   });
+
+  test('404.html has apple-touch-icon link', async ({ page }) => {
+    await page.goto('/404.html');
+    await page.waitForLoadState('domcontentloaded');
+    const link = page.locator('link[rel="apple-touch-icon"]');
+    await expect(link).toHaveAttribute('href', 'img/apple-touch-icon.png');
+    await expect(link).toHaveAttribute('sizes', '180x180');
+  });
 });
 
 test.describe('hreflang tags', () => {
@@ -404,4 +456,31 @@ test.describe('SEO crawl files', () => {
       expect(body).toContain(url);
     }
   });
+
+  test('sitemap.xml has a lastmod date for every URL', async ({ request }) => {
+    const response = await request.get('/sitemap.xml');
+    expect(response.status()).toBe(200);
+    const body = await response.text();
+    const locCount = (body.match(/<loc>/g) || []).length;
+    const lastmodMatches = body.match(/<lastmod>([^<]+)<\/lastmod>/g) || [];
+    expect(lastmodMatches.length).toBe(locCount);
+    for (const match of lastmodMatches) {
+      const date = match.replace(/<\/?lastmod>/g, '');
+      expect(date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    }
+  });
+
+  const faviconFiles = [
+    '/img/favicon-48x48.png',
+    '/img/favicon-32x32.png',
+    '/img/apple-touch-icon.png',
+  ];
+
+  for (const file of faviconFiles) {
+    test(`${file} is served with image/png content-type`, async ({ request }) => {
+      const response = await request.get(file);
+      expect(response.status()).toBe(200);
+      expect(response.headers()['content-type']).toContain('image/png');
+    });
+  }
 });
