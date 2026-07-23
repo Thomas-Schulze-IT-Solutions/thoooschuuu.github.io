@@ -1,6 +1,9 @@
 name: Tests
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     branches:
       - main
@@ -20,7 +23,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v7
         with:
-          node-version: latest
+          node-version: lts/*
           cache: npm
           cache-dependency-path: tests/package-lock.json
 
@@ -28,8 +31,30 @@ jobs:
         run: npm ci
         working-directory: tests
 
-      - name: Install Playwright browsers
+      - name: Resolve Playwright version
+        id: pw
+        run: echo "version=$(node -p 'require("@playwright/test/package.json").version')" >> "$GITHUB_OUTPUT"
+        working-directory: tests
+
+      - name: Cache Playwright browsers
+        id: pw-cache
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.pw.outputs.version }}
+
+      # Cache miss (first run / Playwright upgrade): download the browser and its
+      # apt system libraries. This is the slow path and runs only rarely.
+      - name: Install Playwright browsers with system deps
+        if: steps.pw-cache.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps chromium
+        working-directory: tests
+
+      # Cache hit (the common case): the browser binary is already restored, so this
+      # is a near-instant verify. No apt-get — ubuntu-latest ships the required libs.
+      - name: Verify cached Playwright browser
+        if: steps.pw-cache.outputs.cache-hit == 'true'
+        run: npx playwright install chromium
         working-directory: tests
 
       - name: Run Playwright tests
