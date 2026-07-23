@@ -14,7 +14,7 @@ permissions:
 # Cancel an in-progress run when a newer commit is pushed to the same ref, so
 # rapid pushes to a PR don't pile up redundant runs.
 concurrency:
-  group: tests-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
