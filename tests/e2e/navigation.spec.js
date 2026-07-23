@@ -366,12 +366,18 @@ test.describe('Custom 404 page', () => {
     expect(content).toBe('noindex, nofollow');
   });
 
-  test('404.html has apple-touch-icon link', async ({ page }) => {
+  test('404.html has all favicon links', async ({ page }) => {
     await page.goto('/404.html');
     await page.waitForLoadState('domcontentloaded');
-    const link = page.locator('link[rel="apple-touch-icon"]');
-    await expect(link).toHaveAttribute('href', 'img/apple-touch-icon.png');
-    await expect(link).toHaveAttribute('sizes', '180x180');
+    const svgHref = await page.locator('link[rel="icon"][type="image/svg+xml"]').getAttribute('href');
+    expect(svgHref).toBe('img/logo-icon.svg');
+    const png48Href = await page.locator('link[rel="icon"][type="image/png"][sizes="48x48"]').getAttribute('href');
+    expect(png48Href).toBe('img/favicon-48x48.png');
+    const png32Href = await page.locator('link[rel="icon"][type="image/png"][sizes="32x32"]').getAttribute('href');
+    expect(png32Href).toBe('img/favicon-32x32.png');
+    const appleLink = page.locator('link[rel="apple-touch-icon"]');
+    await expect(appleLink).toHaveAttribute('href', 'img/apple-touch-icon.png');
+    await expect(appleLink).toHaveAttribute('sizes', '180x180');
   });
 });
 
